@@ -45,13 +45,19 @@ CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
    
 ### Start a new task 
 - POST /api/task/start
-    - Params:
+    - Params in the body as JSON:
         - name: Name of the task
+    ```json
+    { "name": "Task 1" }
+    ```
 
 ### End a task
 - POST /api/task/end
-    - Params:
+    - Params in the body as JSON:
         - name: Name of the task
+    ```json
+    { "name": "Task 1" }
+    ```
     
 ## Console commands
 
