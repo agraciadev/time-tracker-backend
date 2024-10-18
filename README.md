@@ -8,8 +8,6 @@
 
 3. Run the containers `docker compose up -d --wait`
 
-4. (Only first time) Execute DB migrations `./bin/console doctrine:migrations:migrate`
-
 To stop and remove the containers `docker compose down --remove-orphans`
 
 ## ENV example

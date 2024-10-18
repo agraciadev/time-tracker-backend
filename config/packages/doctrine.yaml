@@ -22,12 +22,6 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Infrastructure/Doctrine/Mapping/Entity'
                 prefix: App\Domain\Entity
                 alias: Entity
-            ValueObject:
-                is_bundle: false
-                type: xml
-                dir: '%kernel.project_dir%/src/Infrastructure/Doctrine/Mapping/ValueObject'
-                prefix: App\Domain\ValueObject
-                alias: ValueObject
         controller_resolver:
             auto_mapping: false
 
