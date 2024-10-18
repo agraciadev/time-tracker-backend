@@ -2,7 +2,7 @@
    
 ## Usage
 
-1. Create the .env file with yours environment parameters
+1. Create the .env file with your environment parameters
 
 2. Build the images `docker compose build --no-cache`
 
@@ -40,31 +40,30 @@ CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
 
 ## API endpoints
 
+### Get all the tasks
 - GET /api/task/all
-    - Returns all the tasks
-    
+   
+### Start a new task 
 - POST /api/task/start
-    - Start a new task
     - Params:
         - name: Name of the task
 
+### End a task
 - POST /api/task/end
-    - End a task
     - Params:
         - name: Name of the task
     
 ## Console commands
 
+### List tasks
 - `./bin/console app:task:list` or from the host `docker exec -it time-tracker-backend-php-1 sh -c "./bin/console app:task:list"`
-    - List tasks
 
+### Start a new task
 - `./bin/console app:task:start` or from the host `docker exec -it time-tracker-backend-php-1 sh -c "./bin/console app:task:start"`
-    - Start a new task
     - Params:
         - name: Name of the task
-    
+### End the task
 - `./bin/console app:task:end` or from the host `docker exec -it time-tracker-backend-php-1 sh -c "./bin/console app:task:end"`
-    - End the task
     - Params:
         - name: Name of the task
     
