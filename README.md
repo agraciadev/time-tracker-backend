@@ -55,15 +55,15 @@ CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
     
 ## Console commands
 
-- ./bin/console app:task:list
+- `./bin/console app:task:list` or from the host `docker exec -it time-tracker-backend-php-1 sh -c "./bin/console app:task:list"`
     - List tasks
 
-- ./bin/console app:task:start
+- `./bin/console app:task:start` or from the host `docker exec -it time-tracker-backend-php-1 sh -c "./bin/console app:task:start"`
     - Start a new task
     - Params:
         - name: Name of the task
     
-- ./bin/console app:task:end
+- `./bin/console app:task:end` or from the host `docker exec -it time-tracker-backend-php-1 sh -c "./bin/console app:task:end"`
     - End the task
     - Params:
         - name: Name of the task
