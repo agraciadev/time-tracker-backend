@@ -2,7 +2,7 @@
    
 ## Usage
 
-1. Create the .env file whit yours environment parameters
+1. Create the .env file with yours environment parameters
 
 2. Build the images `docker compose build --no-cache`
 
