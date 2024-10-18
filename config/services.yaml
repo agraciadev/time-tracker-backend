@@ -4,6 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    APP_ENV: '%env(resolve:APP_ENV)%'
+    APP_TIMEZONE: '%env(APP_TIMEZONE)%'
+
+imports:
+    - { resource: "queues.yaml" }
 
 services:
     # default configuration for services in *this* file
@@ -16,9 +21,78 @@ services:
     App\:
         resource: '../src/'
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
+            - '../src/Domain/Entity/'
             - '../src/Kernel.php'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # Controllers
+    App\Infrastructure\Console\:
+        resource: "%kernel.project_dir%/src/Infrastructure/Console"
+        arguments:
+            $commandBus: '@console_command.bus'
+        tags: [ "controller.service_arguments" ]
+
+    App\Infrastructure\Controller\Api\:
+        resource: "%kernel.project_dir%/src/Infrastructure/Controller/Api"
+        arguments:
+            $commandBus: '@api_command.bus'
+            $queryBus: '@api_query.bus'
+        tags: [ "controller.service_arguments" ]
+
+    App\Infrastructure\Controller\Html\:
+        resource: "%kernel.project_dir%/src/Infrastructure/Controller/Html"
+        arguments:
+            $messageBus: '@html.bus'
+        tags: [ "controller.service_arguments" ]
+
+    App\Infrastructure\Controller\Docs\:
+        resource: "%kernel.project_dir%/src/Infrastructure/Controller/Docs"
+        tags: [ "controller.service_arguments" ]
+
+
+    # Commands
+    App\Application\Query\:
+        resource: "%kernel.project_dir%/src/Application/Query"
+
+    App\Application\Service\:
+        resource: "%kernel.project_dir%/src/Application/Service"
+
+    # Middlewares
+    App\Infrastructure\Middleware\ConsoleMiddleware:
+        class: App\Infrastructure\Middleware\ConsoleMiddleware
+
+    App\Infrastructure\Middleware\HtmlMiddleware:
+        class: App\Infrastructure\Middleware\HtmlMiddleware
+
+    App\Infrastructure\Middleware\ApiMiddleware:
+        class: App\Infrastructure\Middleware\ApiMiddleware
+
+    # Listener
+    App\Infrastructure\Listener\:
+        resource: '%kernel.project_dir%/src/Infrastructure/Listener'
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller }
+
+    # Serializer
+    App\Infrastructure\Serializer\Handler\Uuid\UuidSerializerHandler:
+        tags:
+            - { name: jms_serializer.subscribing_handler }
+
+    # Repository
+    App\Domain\Repository\:
+        resource: '%kernel.project_dir%/src/Domain/Repository'
+
+    App\Infrastructure\Doctrine\Repository\:
+        resource: '%kernel.project_dir%/src/Infrastructure/Doctrine/Repository'
+
+    # ExceptionsApi
+    App\Infrastructure\ExceptionsApi\ApiCodeExceptions:
+        class: App\Infrastructure\ExceptionsApi\ApiCodeExceptions
+        arguments:
+            - !tagged_iterator app.apicodes
+
+    App\Infrastructure\ExceptionsApi\Docs\:
+        resource: '../src/Infrastructure/ExceptionsApi/Docs'
+        tags: [ 'app.apicodes' ]

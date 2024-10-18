@@ -1,0 +1,7 @@
+App\Domain\Entity\Time:
+  exclusion_policy: ALL
+  properties:
+    startTime:
+      groups: [default]
+    endTime:
+      groups: [default]

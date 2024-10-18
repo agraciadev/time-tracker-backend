@@ -1,0 +1,9 @@
+twig:
+    file_name_pattern: '*.twig'
+    default_path: '%kernel.project_dir%/templates'
+    paths:
+        '%kernel.project_dir%/src/Infrastructure/templates/%env(APP_THEME)%': 'current'
+
+when@test:
+    twig:
+        strict_variables: true

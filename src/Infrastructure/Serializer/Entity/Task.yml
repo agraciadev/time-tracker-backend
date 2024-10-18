@@ -1,0 +1,9 @@
+App\Domain\Entity\Task:
+  exclusion_policy: ALL
+  properties:
+    name:
+      groups: [default]
+    times:
+      groups: [default]
+    inProgress:
+      groups: [ default ]

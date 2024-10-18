@@ -1,0 +1,3 @@
+App\Domain\Entity\AbstractUuidEntity:
+  exclusion_policy: ALL
+  properties:

@@ -1,37 +1,75 @@
 #“Time Tracker” Developer Exercise
-
-## Definition
-
-1) The task is to make a simple time tracker. The user should be able to:
-   ● Type the name of the task he is working on and click “start”.
-   ● See the timer that is counting how long the task is already taking.
-   ● Click Stop to stop working on that task (the timer stops).
-   ● Type another name for a different task and click “start” again. The page should start
-   counting from the beginning.
-   ● On the same page (or other, up to you) user should be able to see the summary of the
-   time tracker where it displays how much time I spent on which task, and how much time
-   I was working today.
-2) Requirements:
-   ● Place all the code in Github or Bitbucket
-   ● Store it in a Docker container.
-   ● Feel free to use your favourite PHP framework, but we use Sympfony, and it will be
-   more appreciated, we are looking for a professional thatcan do a smart utilization of
-   developing tools. Always keep in mind the SOLID principles.
-   ● The data should be stored in any relational database you wish.
-   ● The tasks can be recognized by name, so if I type “homepage development” twice
-   during one day, spend 2h in the morning and 0.5h in the afternoon, then at the end of
-   the day I should see 2.5h near “homepage development”.
-   ● Don’t forget the README.md
-3) Hints:
-   We do not require the page to be beautiful, it can be simplest style, but please make
-   them responsive, in the simplest possible way. Remember, mobile first!
-4) One step further (optional):
-   We love the terminal, so we would appreciate it if you write a PHP script that receives by
-   parameter the action (start / end) and the name of the task. And other that have to
-   returns a list of all the tasks with their status, start time, end time and total elapsed
-   time.
    
 ## Usage
 
-Run `docker compose up -d --wait`
+1. Create the .env file whit yours environment parameters
 
+2. Build the images `docker compose build --no-cache`
+
+3. Run the containers `docker compose up -d --wait`
+
+4. (Only first time) Execute DB migrations `./bin/console doctrine:migrations:migrate`
+
+To stop and remove the containers `docker compose down --remove-orphans`
+
+## ENV example
+
+APP_ENV=dev
+
+APP_SECRET=60e87637c840babebb479f08c3159fe3
+
+MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0
+
+DATABASE_URL="postgresql://app:!ChangeMe!@database:5432/time-tracker?serverVersion=16&charset=utf8"
+
+POSTGRES_PASSWORD=!ChangeMe!
+
+POSTGRES_USER=app
+
+POSTGRES_DB=app
+
+POSTGRES_VERSION=16
+
+POSTGRES_CHARSET=utf8
+
+DB_HOST_PORT=5432
+
+APP_TIMEZONE=Europe/Madrid
+
+APP_THEME=base
+
+CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
+
+## API endpoints
+
+- GET /api/task/all
+    - Returns all the tasks
+    
+- POST /api/task/start
+    - Start a new task
+    - Params:
+        - name: Name of the task
+
+- POST /api/task/end
+    - End a task
+    - Params:
+        - name: Name of the task
+    
+## Console commands
+
+- ./bin/console app:task:list
+    - List tasks
+
+- ./bin/console app:task:start
+    - Start a new task
+    - Params:
+        - name: Name of the task
+    
+- ./bin/console app:task:end
+    - End the task
+    - Params:
+        - name: Name of the task
+    
+## Tests
+
+Run `./vendor/bin/phpunit` to execute the tests

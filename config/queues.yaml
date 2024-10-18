@@ -1,0 +1,25 @@
+framework:
+    messenger:
+        default_bus: console_command.bus
+        buses:
+            console_command.bus:
+                middleware:
+                    - 'App\Infrastructure\Middleware\ConsoleMiddleware'
+                    - validation
+                    - doctrine_transaction
+            console_query.bus:
+                middleware:
+                    - 'App\Infrastructure\Middleware\ConsoleMiddleware'
+                    - validation
+            html.bus:
+                middleware:
+                    - 'App\Infrastructure\Middleware\HtmlMiddleware'
+            api_command.bus:
+                middleware:
+                    - 'App\Infrastructure\Middleware\ApiMiddleware'
+                    - validation
+                    - doctrine_transaction
+            api_query.bus:
+                middleware:
+                    - 'App\Infrastructure\Middleware\ApiMiddleware'
+                    - validation
