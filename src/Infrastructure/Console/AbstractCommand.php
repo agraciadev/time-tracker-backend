@@ -3,11 +3,9 @@
 namespace App\Infrastructure\Console;
 
 use App\Infrastructure\Stamp\ConsoleResponseStamp;
-use App\Infrastructure\Stamp\ResponseStamp;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;

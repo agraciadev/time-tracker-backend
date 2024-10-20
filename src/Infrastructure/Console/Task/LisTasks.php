@@ -14,7 +14,6 @@ use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 class LisTasks extends AbstractCommand
 {
-    const SECONDS_IN_A_DAY = 86400;
     const SECONDS_IN_AN_HOUR = 3600;
     const SECONDS_IN_AN_MINUTE = 60;
 
@@ -52,17 +51,15 @@ class LisTasks extends AbstractCommand
                     $totalSeconds += $endTime->getTimestamp() - $time->startTime()->getTimestamp();
                 }
 
-                $days = floor($totalSeconds / self::SECONDS_IN_A_DAY);
-                $remainingSeconds = $totalSeconds % self::SECONDS_IN_A_DAY;
-                $hours = floor($remainingSeconds / self::SECONDS_IN_AN_HOUR);
-                $remainingSeconds = $remainingSeconds % self::SECONDS_IN_AN_HOUR;
+                $hours = floor($totalSeconds / self::SECONDS_IN_AN_HOUR);
+                $remainingSeconds = $totalSeconds % self::SECONDS_IN_AN_HOUR;
                 $minutes = floor($remainingSeconds / self::SECONDS_IN_AN_MINUTE);
                 $seconds = $remainingSeconds % self::SECONDS_IN_AN_MINUTE;
 
                 $rows[] = [
                     $task->name(),
                     $task->inProgress() ? "In progress" : "Ended",
-                    "$days Days $hours Hours $minutes Minutes $seconds Seconds"
+                    "$hours Hours $minutes Minutes $seconds Seconds"
                 ];
             }
 
